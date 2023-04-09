@@ -1,3 +1,5 @@
+import components.aqi.IndexCalculator;
+
 import java.io.*;
 import java.util.Properties;
 public class Main {
@@ -15,5 +17,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
 }

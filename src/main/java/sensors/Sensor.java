@@ -4,3 +4,4 @@ public interface Sensor {
 
     public Float getReading();
 }
+

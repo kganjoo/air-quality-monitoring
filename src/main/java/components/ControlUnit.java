@@ -1,4 +1,4 @@
-package sensors;
+package components;
 
 public class ControlUnit {
     enum Level{

@@ -1,3 +1,5 @@
+package components.smoothener;
+
 public class AverageCalc{
 
     private float total;

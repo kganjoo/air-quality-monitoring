@@ -1,4 +1,11 @@
+package components.smoothener;
+
+import components.aqi.AQICalculator;
+import components.smoothener.AverageCalc;
+
 public class DataSmoothener {
+    private AQICalculator aqiCalculator;
+
     int window_size;
     AverageCalc AverageCalc_Temp = new AverageCalc(5);
     AverageCalc AverageCalc_Hum = new AverageCalc(5);
@@ -22,6 +29,7 @@ public class DataSmoothener {
 
     public void AvgCalcCO(float in){
         float output = AverageCalc_CO.CalculateAvg(in);
+
     }
 
     public void AvgCalcCO2(float in){
