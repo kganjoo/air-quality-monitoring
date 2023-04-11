@@ -1,4 +1,4 @@
-package main.java.sensors;
+package sensors;
 
 public interface Sensor {
 

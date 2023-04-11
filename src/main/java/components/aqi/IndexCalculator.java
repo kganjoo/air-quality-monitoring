@@ -1,7 +1,8 @@
 package components.aqi;
 
 import com.opencsv.CSVReader;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -81,8 +82,8 @@ public class IndexCalculator {
                         }
                         col++;
                     }
-                    Pair<Float,Float> concentrationRange = new Pair<Float, Float>(rangeLow,rangeHigh);
-                    Pair<Integer,Integer> aqiRange = new Pair<Integer, Integer>(aqiLow,aqiHigh);
+                    ImmutablePair<Float,Float> concentrationRange = new ImmutablePair<>(rangeLow,rangeHigh);
+                    ImmutablePair<Integer,Integer> aqiRange = new ImmutablePair<>(aqiLow,aqiHigh);
                     rangeMappings.put(concentrationRange,aqiRange);
 
                 }
