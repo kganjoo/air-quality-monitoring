@@ -1,7 +1,7 @@
-package components;
+package main.java.components;
 
 import components.smoothener.DataSmoothener;
-import sensors.*;
+import main.java.sensors.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,16 +17,30 @@ public class DataPreprocessor {
     private DataSmoothener smoothener;
 
 
-    public Float getTemperature() throws IOException {
-        TempHum temp = new TempHum();
-        temp.getReading();
-        return getValueFromFile("TempInput.csv");
+    public void getTemperature() throws IOException {
+        executorService.submit(()->{
+            TempHum temp = new TempHum();
+            temp.getReading();
+            try{
+                Float value = getValueFromFile("TempInput.csv");
+                smoothener.AvgCalcTemp(value);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    public Float getHumidity() throws IOException {
-        TempHum hum = new TempHum();
-        hum.getReading();
-        return getValueFromFile("HumInput.csv");
+    public void getHumidity() throws IOException {
+        executorService.submit(()->{
+            TempHum hum = new TempHum();
+            hum.getReading();
+            try {
+                Float value = getValueFromFile("HumInput.csv");
+                smoothener.AvgCalcHum(value);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void getCOGasConcentration() throws IOException {
@@ -41,32 +55,59 @@ public class DataPreprocessor {
                 e.printStackTrace();
             }
         });
-
     }
 
-    public Float getCO2GasConcentration() throws IOException {
-        CO2 co2 = new CO2();
-        co2.getReading();
-        return getValueFromFile("CO2Input.csv");
+    public void getCO2GasConcentration() throws IOException {
+        executorService.submit(()->{
+            CO2 co2 = new CO2();
+            co2.getReading();
+                try {
+                    Float value = getValueFromFile("CO2Input.csv");
+                    smoothener.AvgCalcCO2(value);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        });
     }
 
-    public Float getNO2GasConcentration() throws IOException {
-        NO2 no2 = new NO2();
-        no2.getReading();
-        return getValueFromFile("NO2Input.csv");
+    public void getNO2GasConcentration() throws IOException {
+        executorService.submit(()->{
+            NO2 no2 = new NO2();
+            no2.getReading();
+                try {
+                    Float value = getValueFromFile("NO2Input.csv");
+                    smoothener.AvgCalcNO2(value);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        });
     }
 
-    public Float getPM25() throws IOException {
-        PM pm25 = new PM();
-        pm25.getReading();
-        //read from file
-        return getValueFromFile("PM25Input.csv");
+    public void getPM25() throws IOException {
+        executorService.submit(()->{
+            PM pm25 = new PM();
+            pm25.getReading();
+                try {
+                    //read from file
+                    Float value = getValueFromFile("PM25Input.csv");
+                    smoothener.AvgCalcPM25(value);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        });
     }
 
-    public Float getPM10() throws IOException {
+    public void getPM10() throws IOException {
+        executorService.submit(()->{
         PM pm10 = new PM();
         pm10.getReading();
-        return getValueFromFile("PM10Input.csv");
+            try {
+                Float value = getValueFromFile("PM10Input.csv");
+                smoothener.AvgCalcPM10(value);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private Float getValueFromFile(String csvFileName) throws IOException {
