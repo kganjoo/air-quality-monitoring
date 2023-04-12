@@ -1,4 +1,4 @@
-package components;
+package main.java.components;
 
 public class ControlUnit {
     enum Level{
@@ -13,7 +13,7 @@ public class ControlUnit {
         Boolean inc = null;
         Boolean dec = null;
     }
-
+    Fan fan = new Fan();
     private Level level;
     ControlUnit(){
         this.level = Level.OK;
@@ -92,5 +92,6 @@ public class ControlUnit {
                 output.out = true;
             }
         }
+        fan.FanStatus(output.out, output.inc, output.dec);
     }
 }
