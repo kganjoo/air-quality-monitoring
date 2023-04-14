@@ -1,4 +1,4 @@
-package main.java.components;
+package components;
 
 public class ControlUnit {
     enum Level{

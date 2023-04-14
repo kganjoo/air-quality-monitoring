@@ -1,4 +1,4 @@
-package main.java.components;
+package components;
 
 public class Fan {
     static boolean status;
@@ -8,7 +8,7 @@ public class Fan {
         status = false;
         speed = 0;
     }
-    public int FanStatus(boolean x, boolean inc, boolean dec){
+    public void FanStatus(boolean x, boolean inc, boolean dec){
         // if x=1 and status=0: {
         //     status:= 1
         //     output:=speed }
@@ -55,6 +55,7 @@ public class Fan {
         if (!x){
             status = true;
         }
-        return output;
+        // return output;
+        System.out.println("Fan Speed: "+output);
     }
 }
