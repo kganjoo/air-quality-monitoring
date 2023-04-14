@@ -5,11 +5,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.FileReader;
-import java.io.IOException;
-import java.rmi.server.ExportException;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
+
 
 public class IndexCalculator {
 
@@ -18,14 +17,14 @@ public class IndexCalculator {
 
     public IndexCalculator(String pollutantName, String fileName) {
         this.pollutantName = pollutantName;
-        this.rangeMappings = new HashMap<Pair<Float, Float>, Pair<Integer, Integer>>();
+        this.rangeMappings = new HashMap<>();
         init(fileName);
     }
 
 
     public  Float getPollutantIndex(Float concentration) {
-
         for(Pair<Float,Float> concentrationRange : rangeMappings.keySet()){
+
 
             Float concentrationLow = concentrationRange.getKey();
             Float concentrationHigh = concentrationRange.getValue();
