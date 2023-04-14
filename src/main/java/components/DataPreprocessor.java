@@ -1,6 +1,7 @@
 package components;
 
 import components.smoothener.DataSmoothener;
+import constants.Constants;
 import sensors.*;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class DataPreprocessor {
     private DataSmoothener smoothener;
 
     public void Init() throws IOException {
+        this.smoothener = new DataSmoothener(Constants.window_size);
         getTemperature();
         getHumidity();;
         getCO2GasConcentration();
@@ -32,9 +34,10 @@ public class DataPreprocessor {
             TempHum temp = new TempHum();
             temp.getReading();
             try{
-                Float value = getValueFromFile("TempInput.csv");
+                Float value = getValueFromFile(Constants.TEMP_INPUT);
+
                 smoothener.AvgCalcTemp(value);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -46,7 +49,7 @@ public class DataPreprocessor {
             TempHum hum = new TempHum();
             hum.getReading();
             try {
-                Float value = getValueFromFile("HumInput.csv");
+                Float value = getValueFromFile(Constants.HUM_INPUT);
                 smoothener.AvgCalcHum(value);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -60,7 +63,7 @@ public class DataPreprocessor {
             CO co = new CO();
             co.getReading();
             try {
-                Float value = getValueFromFile("COInput.csv");
+                Float value = getValueFromFile(Constants.CO_INPUT);
                 smoothener.AvgCalcCO(value);
 
             } catch (IOException e) {
@@ -75,7 +78,7 @@ public class DataPreprocessor {
             CO2 co2 = new CO2();
             co2.getReading();
                 try {
-                    Float value = getValueFromFile("CO2Input.csv");
+                    Float value = getValueFromFile(Constants.CO2_INPUT);
                     smoothener.AvgCalcCO2(value);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -89,7 +92,7 @@ public class DataPreprocessor {
             NO2 no2 = new NO2();
             no2.getReading();
                 try {
-                    Float value = getValueFromFile("NO2Input.csv");
+                    Float value = getValueFromFile(Constants.NO2_INPUT);
                     smoothener.AvgCalcNO2(value);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -104,7 +107,7 @@ public class DataPreprocessor {
             pm25.getReading();
                 try {
                     //read from file
-                    Float value = getValueFromFile("PM25Input.csv");
+                    Float value = getValueFromFile(Constants.PM25_INPUT);
                     smoothener.AvgCalcPM25(value);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -118,7 +121,7 @@ public class DataPreprocessor {
         PM pm10 = new PM();
         pm10.getReading();
             try {
-                Float value = getValueFromFile("PM10Input.csv");
+                Float value = getValueFromFile(Constants.PM10_INPUT);
                 smoothener.AvgCalcPM10(value);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -127,8 +130,7 @@ public class DataPreprocessor {
     }
 
     private Float getValueFromFile(String csvFileName) throws IOException {
-        String path = System.getProperty("user.dir");
-        Path myPath = Paths.get(path + "/src/sensors/" + csvFileName);
+        Path myPath = Paths.get(csvFileName);
         String reading = Files.readAllLines(myPath).get(round);
         Float value = Float.parseFloat(reading);
         return value;

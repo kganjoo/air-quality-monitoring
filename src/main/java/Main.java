@@ -8,12 +8,6 @@ public class Main {
         System.out.println("Running air quality monitoring project");
         System.out.println("Reading Config File:...");
         try {
-            String configFilePath = "./config.properties";
-            FileInputStream propsInput = new FileInputStream(configFilePath);
-            Properties prop = new Properties();
-            prop.load(propsInput);
-            System.out.println(prop.getProperty("window_size"));
-
             DataPreprocessor data = new DataPreprocessor();
             data.Init();
         } catch (FileNotFoundException e) {
