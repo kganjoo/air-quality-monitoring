@@ -1,4 +1,4 @@
-aqilow, aqihigh, rangelow, rangehigh
+aqiLow, aqiHigh, concentrationLow, concentrationHigh
 0,50,0,4.4
 51,100,4.5,9.4
 101,150,9.5,12.4

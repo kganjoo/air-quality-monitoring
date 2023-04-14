@@ -1,0 +1,8 @@
+aqiLow, aqiHigh, concentrationLow, concentrationHigh
+0,50,0,54
+51,100,55,154
+101,150,155,254
+151,200,255,354
+201,300,355,424
+301,500,425,604
+
