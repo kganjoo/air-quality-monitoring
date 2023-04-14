@@ -30,61 +30,46 @@ public class AQICalculator {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void calculatePM25Index(Float reading) throws ExecutionException, InterruptedException {
+    public void calculatePM25Index(Float reading) {
         Float pm25Index = PM25Index.getPollutantIndex(reading);
         pollutantIndexes.add(pm25Index);
         triggerMaxIndex();
     }
 
-    public void calculatePM10Index(Float reading) throws ExecutionException, InterruptedException {
+    public void calculatePM10Index(Float reading)  {
         Float pm10Index = PM10Index.getPollutantIndex(reading);
         pollutantIndexes.add(pm10Index);
         triggerMaxIndex();
     }
 
-    public void calculateCOIndex(Float reading) throws ExecutionException, InterruptedException {
+
+    public void calculateCOIndex(Float reading)  {
         Float cOIndex = COIndex.getPollutantIndex(reading);
         pollutantIndexes.add(cOIndex);
         triggerMaxIndex();
     }
 
-    public void calculateNO2Index(Float reading) throws ExecutionException, InterruptedException {
+    public void calculateNO2Index(Float reading)  {
         Float no2Index = NO2Index.getPollutantIndex(reading);
         pollutantIndexes.add(no2Index);
         triggerMaxIndex();
     }
 
-    public void calculateCO2Index(Float reading) throws ExecutionException, InterruptedException {
+    public void calculateCO2Index(Float reading)  {
         Float co2Index = CO2Index.getPollutantIndex(reading);
         pollutantIndexes.add(co2Index);
         triggerMaxIndex();
     }
 
 
-    private void triggerMaxIndex() throws ExecutionException, InterruptedException {
-        if(pollutantIndexes.size()==4){
-            List<Float> indexes = new ArrayList<>();
-            this.aqiIndex = indexSelector.calculateIndex(indexes);
+    private void triggerMaxIndex() {
+        while (true) {
+            if (pollutantIndexes.size() == 5) {
+                this.aqiIndex = indexSelector.calculateIndex(pollutantIndexes);
+                System.out.println("Calculated aqi index is " + this.aqiIndex);
+            }
+            System.out.println("Ignoring trigger as size list is not 4");
         }
-        //ignore triggers
     }
 
     public Float getAqiIndex() {
