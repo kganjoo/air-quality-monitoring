@@ -1,5 +1,7 @@
 package components.aqi;
 
+import constants.Constants;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,24 +9,41 @@ import java.util.concurrent.*;
 
 public class AQICalculator {
 
-
     private IndexCalculator PM25Index;
-    private   IndexCalculator NO2Index;
-    private   IndexCalculator PM10Index;
-    private  IndexCalculator COIndex;
-    private MaxIndexCalculator maxIndex;
+    private  IndexCalculator NO2Index;
+    private  IndexCalculator PM10Index;
+    private IndexCalculator COIndex;
+    private IndexCalculator CO2Index;
+    private IndexSelector indexSelector;
     private List<Float>pollutantIndexes;
     private Float aqiIndex;
 
     public AQICalculator() {
 
-        PM25Index = new IndexCalculator("PM25", "");
-        NO2Index = new IndexCalculator("NO2","");
-        PM10Index = new IndexCalculator("PM10","");
-        COIndex = new IndexCalculator("CO","src/main/resources/COIndex.csv");
-        maxIndex = new MaxIndexCalculator();
+        PM25Index = new IndexCalculator("PM25", Constants.PM25_INDEX_FILE_PATH);
+        NO2Index = new IndexCalculator("NO2",Constants.NO2_INDEX_FILE_PATH);
+        PM10Index = new IndexCalculator("PM10",Constants.PM10_INDEX_FILE_PATH);
+        COIndex = new IndexCalculator("CO",Constants.CO2_INDEX_FILE_PATH);
+        CO2Index = new IndexCalculator("CO2",Constants.CO_INDEX_FILE_PATH);
+        indexSelector = new IndexSelector();
         pollutantIndexes = Collections.synchronizedList(new ArrayList<Float>());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -53,11 +72,17 @@ public class AQICalculator {
         triggerMaxIndex();
     }
 
+    public void calculateCO2Index(Float reading) throws ExecutionException, InterruptedException {
+        Float co2Index = CO2Index.getPollutantIndex(reading);
+        pollutantIndexes.add(co2Index);
+        triggerMaxIndex();
+    }
 
-    public void triggerMaxIndex() throws ExecutionException, InterruptedException {
+
+    private void triggerMaxIndex() throws ExecutionException, InterruptedException {
         if(pollutantIndexes.size()==4){
             List<Float> indexes = new ArrayList<>();
-            this.aqiIndex = maxIndex.calculateMaxIndex(indexes);
+            this.aqiIndex = indexSelector.calculateIndex(indexes);
         }
         //ignore triggers
     }
