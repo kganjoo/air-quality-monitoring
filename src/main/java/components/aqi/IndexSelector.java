@@ -3,10 +3,10 @@ package components.aqi;
 import java.util.Arrays;
 import java.util.List;
 
-public class MaxIndexCalculator {
+public class IndexSelector {
 
 
-    public Float calculateMaxIndex(List<Float>readings){
+    public Float calculateIndex(List<Float>readings){
 
         Float max = Float.MIN_VALUE;
         for(Float reading : readings){
