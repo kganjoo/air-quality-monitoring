@@ -12,13 +12,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DataPreprocessor {
-    private int round = 0;
+    private int round;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
     private DataSmoothener smoothener;
 
-    public void Init() throws IOException {
+    public void Init(int round) throws IOException {
         this.smoothener = new DataSmoothener(Constants.window_size);
+        this.round = round;
         getTemperature();
         getHumidity();;
         getCO2GasConcentration();
@@ -134,10 +135,5 @@ public class DataPreprocessor {
         String reading = Files.readAllLines(myPath).get(round);
         Float value = Float.parseFloat(reading);
         return value;
-    }
-
-    public void incrementRound()
-    {
-        round++;
     }
 }
