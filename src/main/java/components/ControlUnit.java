@@ -94,7 +94,7 @@ public class ControlUnit {
                 output.out = true;
             }
         }
-        System.out.println("Calculated values out , inc and dec as " + output.out+output.inc.toString()+output.dec.toString());
+        System.out.println("Calculated");
         fan.FanStatus(output.out, output.inc, output.dec);
     }
 }

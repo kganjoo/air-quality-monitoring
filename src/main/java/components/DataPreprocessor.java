@@ -14,10 +14,11 @@ import java.util.concurrent.Executors;
 public class DataPreprocessor {
     private int round;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(5);
     private DataSmoothener smoothener;
+    private ExecutorService executorService;
 
     public void Init(int round) throws IOException {
+        this.executorService = Config.getExecutorService();
         this.smoothener = new DataSmoothener(Constants.window_size);
         this.round = round;
         getTemperature();

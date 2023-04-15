@@ -1,10 +1,10 @@
+import components.Config;
 import components.DataPreprocessor;
 import components.aqi.IndexCalculator;
 
 import java.io.*;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,6 +13,8 @@ public class Main {
         try {
             DataPreprocessor data = new DataPreprocessor();
             int round  =0;
+
+
             while (round<=4) {
 
 
@@ -22,6 +24,8 @@ public class Main {
                 Thread.sleep(7000);
                 round++;
             }
+
+            Config.getExecutorService().shutdown();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
