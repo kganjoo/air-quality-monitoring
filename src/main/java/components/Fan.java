@@ -8,7 +8,7 @@ public class Fan {
         status = false;
         speed = 0;
     }
-    public void FanStatus(boolean x, boolean inc, boolean dec){
+    public void FanStatus(boolean x, Boolean inc, Boolean dec){
         // if x=1 and status=0: {
         //     status:= 1
         //     output:=speed }
@@ -25,6 +25,7 @@ public class Fan {
         //     }
         //     if x=0 {
         //     status:=0 }
+        System.out.println("Entered Fan");
 
         int output=0;
         if (x && !status) {
@@ -55,6 +56,7 @@ public class Fan {
         if (!x){
             status = true;
         }
+
         // return output;
         System.out.println("Fan Speed: "+output);
     }

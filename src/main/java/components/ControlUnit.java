@@ -13,10 +13,12 @@ public class ControlUnit {
         Boolean inc = null;
         Boolean dec = null;
     }
-    Fan fan = new Fan();
+
     private Level level;
-    ControlUnit(){
+    private Fan fan;
+    public ControlUnit(){
         this.level = Level.OK;
+        this.fan = new Fan();
     }
 
     public Level getLatestLevel(float aqiIndex)
@@ -92,6 +94,7 @@ public class ControlUnit {
                 output.out = true;
             }
         }
+        System.out.println("Calculated values out , inc and dec as " + output.out+output.inc.toString()+output.dec.toString());
         fan.FanStatus(output.out, output.inc, output.dec);
     }
 }

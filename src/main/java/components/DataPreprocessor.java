@@ -21,17 +21,17 @@ public class DataPreprocessor {
         this.smoothener = new DataSmoothener(Constants.window_size);
         this.round = round;
         getTemperature();
-        getHumidity();;
+        getHumidity();
         getCO2GasConcentration();
         getNO2GasConcentration();
-        getNO2GasConcentration();
+        getCOGasConcentration();
         getPM10();
         getPM25();
     }
 
     public void getTemperature() throws IOException {
         executorService.submit(()->{
-            System.out.println("The current thread is "+ Thread.currentThread().getName());
+            
             TempHum temp = new TempHum();
             temp.getReading();
             try{
@@ -46,7 +46,7 @@ public class DataPreprocessor {
 
     public void getHumidity() throws IOException {
         executorService.submit(()->{
-            System.out.println("The current thread is "+ Thread.currentThread().getName());
+            
             TempHum hum = new TempHum();
             hum.getReading();
             try {
@@ -60,7 +60,7 @@ public class DataPreprocessor {
 
     public void getCOGasConcentration() throws IOException {
         executorService.submit(()->{
-            System.out.println("The current thread is "+ Thread.currentThread().getName());
+            
             CO co = new CO();
             co.getReading();
             try {
@@ -75,7 +75,7 @@ public class DataPreprocessor {
 
     public void getCO2GasConcentration() throws IOException {
         executorService.submit(()->{
-            System.out.println("The current thread is "+ Thread.currentThread().getName());
+            
             CO2 co2 = new CO2();
             co2.getReading();
                 try {
@@ -89,7 +89,7 @@ public class DataPreprocessor {
 
     public void getNO2GasConcentration() throws IOException {
         executorService.submit(()->{
-            System.out.println("The current thread is "+ Thread.currentThread().getName());
+            
             NO2 no2 = new NO2();
             no2.getReading();
                 try {
@@ -103,7 +103,7 @@ public class DataPreprocessor {
 
     public void getPM25() throws IOException {
         executorService.submit(()->{
-            System.out.println("The current thread is "+ Thread.currentThread().getName());
+            
             PM pm25 = new PM();
             pm25.getReading();
                 try {
@@ -118,7 +118,7 @@ public class DataPreprocessor {
 
     public void getPM10() throws IOException {
         executorService.submit(()->{
-            System.out.println("The current thread is "+ Thread.currentThread().getName());
+            
         PM pm10 = new PM();
         pm10.getReading();
             try {

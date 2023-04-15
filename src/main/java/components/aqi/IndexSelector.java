@@ -1,17 +1,54 @@
 package components.aqi;
 
+import components.ControlUnit;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
-public class IndexSelector {
+public class IndexSelector implements Runnable {
+
+    ControlUnit controlUnit;
+
+    private BlockingQueue<Float> readings;
+
+    IndexSelector(BlockingQueue<Float> readings) {
+        this.readings = readings;
+        this.controlUnit = new ControlUnit();
+    }
 
 
-    public Float calculateIndex(List<Float>readings){
+    public void calculateIndex() {
+        try {
+            while(true) {
+                if(readings.size()==5) {
+                    Float max = Float.MIN_VALUE;
+                    while (readings.size() > 0) {
+                        Float curr = readings.remove();
+                        max = Math.max(curr, max);
 
-        Float max = Float.MIN_VALUE;
-        for(Float reading : readings){
-            max = Math.max(reading,max);
+                    }
+                    System.out.println("Calling control unit with aqiIndex "+max);
+
+                    controlUnit.getControlAction(max);
+
+                    break;
+                }
+                else {
+                    System.out.println("hello");
+                    Thread.sleep(1000);
+                }
+
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        return max;
+    }
+
+
+        @Override
+    public void run() {
+        calculateIndex();
     }
 }
