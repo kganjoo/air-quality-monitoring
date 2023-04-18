@@ -15,14 +15,13 @@ public class Main {
             int round  =0;
 
 
+
             while (round<=4) {
-
-
                 data.Init(round);
+                Config.getBarrier().await();
+                round++;
                 System.out.println("Entering next round -------------------------");
                 System.out.println("\n");
-                Thread.sleep(7000);
-                round++;
             }
 
             Config.getExecutorService().shutdown();
@@ -31,6 +30,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BrokenBarrierException e) {
             e.printStackTrace();
         }
 

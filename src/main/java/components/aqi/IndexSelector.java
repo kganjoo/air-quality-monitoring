@@ -35,7 +35,7 @@ public class IndexSelector implements Runnable {
                     break;
                 }
                 else {
-                    System.out.println("hello");
+
                     Thread.sleep(1000);
                 }
 

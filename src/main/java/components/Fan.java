@@ -1,5 +1,7 @@
 package components;
 
+import java.util.concurrent.BrokenBarrierException;
+
 public class Fan {
     static boolean status;
     static int speed;
@@ -8,23 +10,7 @@ public class Fan {
         status = false;
         speed = 0;
     }
-    public void FanStatus(boolean x, Boolean inc, Boolean dec){
-        // if x=1 and status=0: {
-        //     status:= 1
-        //     output:=speed }
-        //     elif x=1 and status = 1 {
-        //     if inc = 1 and speed = 0: {
-        //     speed:=1 }
-        //     elif inc = 1 and speed=1: {
-        //     speed:=2 }
-        //     elif dec=1 and speed:=1 :{
-        //     speed:=0 }
-        //     elif dec=1 and speed=2: {
-        //     speed:=1 }
-        //     output:=speed
-        //     }
-        //     if x=0 {
-        //     status:=0 }
+    public void FanStatus(boolean x, Boolean inc, Boolean dec) {
         System.out.println("Entered Fan");
 
         int output=0;
@@ -58,6 +44,12 @@ public class Fan {
         }
 
         // return output;
-        System.out.println("Fan Speed: "+output);
+        try {
+            System.out.println("Fan Speed: " + output);
+            Config.getBarrier().await();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
