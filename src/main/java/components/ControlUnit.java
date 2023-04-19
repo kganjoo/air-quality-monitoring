@@ -15,8 +15,10 @@ public class ControlUnit {
     }
 
     private Level level;
-    ControlUnit(){
+    private Fan fan;
+    public ControlUnit(){
         this.level = Level.OK;
+        this.fan = new Fan();
     }
 
     public Level getLatestLevel(float aqiIndex)
@@ -92,5 +94,7 @@ public class ControlUnit {
                 output.out = true;
             }
         }
+        System.out.println("Calculated");
+        fan.FanStatus(output.out, output.inc, output.dec);
     }
 }
