@@ -12,14 +12,13 @@ public class Main {
         System.out.println("Reading Config File:...");
         try {
             DataPreprocessor data = new DataPreprocessor();
-            int round  =0;
 
 
 
-            while (round<=4) {
-                data.Init(round);
+            while (Config.getRoundValue()<=4) {
+                data.startRound(Config.getRoundValue());
                 Config.getBarrier().await();
-                round++;
+                Config.incrementRound();
                 System.out.println("Entering next round -------------------------");
                 System.out.println("\n");
             }

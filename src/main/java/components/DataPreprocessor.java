@@ -17,9 +17,17 @@ public class DataPreprocessor {
     private DataSmoothener smoothener;
     private ExecutorService executorService;
 
-    public void Init(int round) throws IOException {
+    private void Init(){
         this.executorService = Config.getExecutorService();
         this.smoothener = new DataSmoothener(Constants.window_size);
+
+    }
+
+    public void startRound(int round) throws IOException {
+        System.out.println("Starting round "+ round);
+        if(round==1){
+            Init();
+        }
         this.round = round;
         getTemperature();
         getHumidity();
@@ -28,6 +36,8 @@ public class DataPreprocessor {
         getCOGasConcentration();
         getPM10();
         getPM25();
+
+
     }
 
     public void getTemperature() throws IOException {

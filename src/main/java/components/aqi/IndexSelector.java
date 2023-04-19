@@ -1,5 +1,6 @@
 package components.aqi;
 
+import components.Config;
 import components.ControlUnit;
 
 import java.util.Arrays;
@@ -32,10 +33,10 @@ public class IndexSelector implements Runnable {
 
                     controlUnit.getControlAction(max);
 
-                    break;
                 }
                 else {
-
+                    if(Config.getRoundValue()>=5)
+                        break;
                     Thread.sleep(1000);
                 }
 

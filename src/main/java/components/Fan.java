@@ -7,11 +7,22 @@ public class Fan {
     static int speed;
 
     public Fan(){
+        System.out.println("calling Fan constructor");
         status = false;
         speed = 0;
     }
     public void FanStatus(boolean x, Boolean inc, Boolean dec) {
-        System.out.println("Entered Fan");
+        try {
+            System.out.println("Entered Fan");
+            System.out.println("x is " + x);
+            System.out.println(inc);
+            System.out.println(dec);
+            System.out.println(" first status is " + status);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         int output=0;
         if (x && !status) {
@@ -20,7 +31,8 @@ public class Fan {
         } 
         else   {
             if (x && status){
-                if (inc){
+                System.out.println("TURNING FAN ON");
+                if (inc!=null && inc){
                     if (speed==0){
                     speed = 1;
                     }
@@ -28,7 +40,7 @@ public class Fan {
                         speed = 2;
                     }
                 }
-                if (dec){
+                if (dec!=null && dec){
                     if (speed==2){
                     speed = 1;
                     }
@@ -40,12 +52,14 @@ public class Fan {
             }
         }
         if (!x){
-            status = true;
+            status = false;
         }
 
         // return output;
         try {
+            System.out.println("status is "+status);
             System.out.println("Fan Speed: " + output);
+            System.out.println("Calling await from thread "+Thread.currentThread().getName());
             Config.getBarrier().await();
         }
         catch (Exception e){
