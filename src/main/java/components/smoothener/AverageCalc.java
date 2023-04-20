@@ -14,13 +14,25 @@ public class AverageCalc{
         this.len_array = 1;
     }
 
-    public float CalculateAvg(float input) {
-        total = total - array[len_array-1];
-        total = total + input;
-        float output = total / len_array;
-        UpdateArr(input);
-        CheckArr();
-		return output;
+    public float CalculateAvg(Float input) {
+        float output = 0;
+        try{
+            if (input!=null){
+            total = total - array[len_array-1];
+            total = total + input;
+            output = total / len_array;
+            UpdateArr(input);
+            CheckArr();
+            }
+            else{
+                output = total / len_array;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return output;
 	}
 
 	public void CheckArr() {

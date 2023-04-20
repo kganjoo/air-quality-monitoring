@@ -34,14 +34,14 @@ public class DataSmoothener {
         this.aqiCalculator = new AQICalculator(this.controlUnit);
     }
 
-    public void AvgCalcTemp(float in){
+    public void AvgCalcTemp(Float in){
         float output = AverageCalc_Temp.CalculateAvg(in);
         System.out.println(String.format("Value of Temperature is %f",
                output));
 
     }
 
-    public void AvgCalcHum(float in){
+    public void AvgCalcHum(Float in){
         float output = AverageCalc_Hum.CalculateAvg(in);
         System.out.println(String.format("Value of humidity is %f",
                 output));
@@ -49,7 +49,7 @@ public class DataSmoothener {
 
     }
 
-    public void AvgCalcCO(float in) {
+    public void AvgCalcCO(Float in) {
         float output = AverageCalc_CO.CalculateAvg(in);
         System.out.println(String.format("Value of CO is %f",
                 output));
@@ -57,28 +57,28 @@ public class DataSmoothener {
 
     }
 
-    public void AvgCalcCO2(float in){
+    public void AvgCalcCO2(Float in){
         float output = AverageCalc_CO2.CalculateAvg(in);
         System.out.println(String.format("Value of CO2 is %f",
                 output));
         aqiCalculator.calculateCO2Index(output);
     }
 
-    public void AvgCalcNO2(float in){
+    public void AvgCalcNO2(Float in){
         float output = AverageCalc_NO2.CalculateAvg(in);
         System.out.println(String.format("Value of NO2 is %f",
              output));
         aqiCalculator.calculateNO2Index(output);
     }
 
-    public void AvgCalcPM25(float in){
+    public void AvgCalcPM25(Float in){
         float output = AverageCalc_PM25.CalculateAvg(in);
         System.out.println(String.format("Value of PM25 is %f",
              output));
         aqiCalculator.calculatePM25Index(output);
     }
 
-    public void AvgCalcPM10(float in){
+    public void AvgCalcPM10(Float in){
         float output = AverageCalc_PM10.CalculateAvg(in);
         System.out.println(String.format("Value of PM10 is %f",
                output));
