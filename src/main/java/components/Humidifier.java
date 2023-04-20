@@ -5,13 +5,12 @@ public class Humidifier {
     static boolean dehum_status;
 
     public Humidifier(){
-        System.out.println("Calling Humidifier Constructor");
         hum_status = false;
         dehum_status = false;
     }
 
     public void HumidifierComponent(boolean x){
-        boolean output = false;
+        boolean output;
         if (x && !hum_status){
             hum_status = true;
         }
@@ -24,8 +23,6 @@ public class Humidifier {
 
         try {
             System.out.println("Humidifier Status: " + output);
-            System.out.println("Calling await from thread "+Thread.currentThread().getName());
-            Config.getBarrier().await();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -33,7 +30,7 @@ public class Humidifier {
     }
 
     public void DeHumidifierComponent(boolean x){
-        boolean output = false;
+        boolean output;
         if (x && !dehum_status){
             dehum_status = true;
         }
@@ -47,8 +44,7 @@ public class Humidifier {
 
         try {
             System.out.println("De-Humidifier Status: " + output);
-            System.out.println("Calling await from thread "+Thread.currentThread().getName());
-            Config.getBarrier().await();
+
         }
         catch (Exception e){
             e.printStackTrace();

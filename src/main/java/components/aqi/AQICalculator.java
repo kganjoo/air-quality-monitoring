@@ -1,6 +1,7 @@
 package components.aqi;
 
 import components.Config;
+import components.ControlUnit;
 import constants.Constants;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class AQICalculator {
     private Float aqiIndex;
     private final ExecutorService executorService;
 
-    public AQICalculator() {
+    public AQICalculator(ControlUnit controlUnit) {
         this.executorService = Config.getExecutorService();
         PM25Index = new IndexCalculator("PM25", Constants.PM25_INDEX_FILE_PATH);
         NO2Index = new IndexCalculator("NO2",Constants.NO2_INDEX_FILE_PATH);
@@ -28,7 +29,7 @@ public class AQICalculator {
         COIndex = new IndexCalculator("CO",Constants.CO_INDEX_FILE_PATH);
         CO2Index = new IndexCalculator("CO2",Constants.CO2_INDEX_FILE_PATH);
         pollutantIndexes = new ArrayBlockingQueue<>(5);
-        indexSelector = new IndexSelector(pollutantIndexes);
+        indexSelector = new IndexSelector(pollutantIndexes,controlUnit);
         executorService.submit(indexSelector);
 
     }

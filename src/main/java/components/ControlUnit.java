@@ -14,11 +14,15 @@ public class ControlUnit {
         Boolean dec = null;
     }
 
+
+
     private Level level;
     private Fan fan;
+    private Humidifier humidifier;
     public ControlUnit(){
         this.level = Level.OK;
         this.fan = new Fan();
+        this.humidifier = new Humidifier();
     }
 
     public Level getLatestLevel(float aqiIndex)
@@ -97,4 +101,29 @@ public class ControlUnit {
         System.out.println("Calculated");
         fan.FanStatus(output.out, output.inc, output.dec);
     }
+
+
+    public void triggerHumidDeHumid(float humidityLevel){
+        boolean humidOut =false;
+        boolean deHumidOut = false;
+
+            if (humidityLevel < 40) {
+                humidOut = true;
+
+
+            }
+            if (humidityLevel > 60) {
+                deHumidOut = true;
+            }
+
+            humidifier.HumidifierComponent(humidOut);
+            humidifier.DeHumidifierComponent(deHumidOut);
+
+
+    }
+
+
+
+
+
 }

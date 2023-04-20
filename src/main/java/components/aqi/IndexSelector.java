@@ -13,9 +13,9 @@ public class IndexSelector implements Runnable {
 
     private BlockingQueue<Float> readings;
 
-    IndexSelector(BlockingQueue<Float> readings) {
+    IndexSelector(BlockingQueue<Float> readings, ControlUnit controlUnit) {
         this.readings = readings;
-        this.controlUnit = new ControlUnit();
+        this.controlUnit = controlUnit;
     }
 
 
