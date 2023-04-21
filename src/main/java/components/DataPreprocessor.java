@@ -143,7 +143,7 @@ public class DataPreprocessor {
 
     private Float getValueFromFile(String csvFileName) throws IOException {
         Path myPath = Paths.get(csvFileName);
-        String reading = Files.readAllLines(myPath).get(round);
+        String reading = Files.readAllLines(myPath).get(round-1);
         Float value = Float.parseFloat(reading);
         return value;
     }
