@@ -23,19 +23,26 @@ public class IndexSelector implements Runnable {
         try {
             while(true) {
                 if(readings.size()==5) {
-                    Float max = Float.MIN_VALUE;
+                    Float aqi = Float.MIN_VALUE;
                     while (readings.size() > 0) {
                         Float curr = readings.remove();
-                        max = Math.max(curr, max);
+                        aqi = Math.max(curr, aqi);
 
                     }
-                    System.out.println("Calling control unit with aqiIndex "+max);
+                    System.out.println("Calculated AQI for current round is  "+aqi);
+                    Thread.sleep(1000);
+                    controlUnit.triggerFan(aqi);
+                    try {
+                        Config.getBarrier().await();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
 
-                    controlUnit.getControlAction(max);
 
                 }
                 else {
-                    if(Config.getRoundValue()>=5)
+                    if(Config.getRoundValue()>=40)
                         break;
                     Thread.sleep(1000);
                 }

@@ -9,45 +9,40 @@ public class Humidifier {
         dehum_status = false;
     }
 
-    public void HumidifierComponent(boolean x){
-        boolean output;
+    public void triggerHumidifier(boolean x){
         if (x && !hum_status){
             hum_status = true;
+            System.out.println("Turning on Humidifier");
         }
 
-        if (!x && hum_status){
+        else if (!x && hum_status){
             hum_status = false;
+            System.out.println("Turning off Humidifier");
         }
 
-        output = hum_status;
+        else if(x && hum_status){
+            System.out.println("Humidifier is Running");
+        }
 
-        try {
-            System.out.println("Humidifier Status: " + output);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
+
     }
 
-    public void DeHumidifierComponent(boolean x){
+    public void triggerDehumidifier(boolean x){
         boolean output;
         if (x && !dehum_status){
             dehum_status = true;
+            System.out.println("Turning on DeHumidifier");
         }
 
-        if (!x && dehum_status){
+        else if (!x && dehum_status){
             dehum_status = false;
+            System.out.println("Turning off DeHumidifier");
+        }
+        else if(x && dehum_status){
+            System.out.println("DeHumidifier is Running");
         }
 
-        output = dehum_status;
 
-
-        try {
-            System.out.println("De-Humidifier Status: " + output);
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }

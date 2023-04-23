@@ -4,8 +4,15 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Config {
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(5);
-    private static CyclicBarrier barrier = new CyclicBarrier(2);
+    /**
+     * We need 7 threads for the entire round.
+     *  6 threads started by data preprocessor for each of its computation
+     *  1 thread started by aqi calculator , where index selector keeps running and polls for values
+     *
+     */
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(7);
+    // 8 threads are running in total , 7 of them are spun by executor service, and 1 main thread
+    private static CyclicBarrier barrier = new CyclicBarrier(8);
     private static AtomicInteger round = new AtomicInteger(1);
 
 

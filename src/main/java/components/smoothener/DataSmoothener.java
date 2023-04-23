@@ -1,10 +1,12 @@
 package components.smoothener;
 
+import components.Config;
 import components.ControlUnit;
 import components.aqi.AQICalculator;
 import components.smoothener.AverageCalc;
 import constants.Constants;
 
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ExecutionException;
 
 public class DataSmoothener {
@@ -34,54 +36,61 @@ public class DataSmoothener {
         this.aqiCalculator = new AQICalculator(this.controlUnit);
     }
 
-    public void AvgCalcTemp(Float in){
-        float output = AverageCalc_Temp.CalculateAvg(in);
-        System.out.println(String.format("Value of Temperature is %f",
-               output));
 
-    }
 
-    public void AvgCalcHum(Float in){
+    public void AvgCalcHum(Float in) throws BrokenBarrierException, InterruptedException {
         float output = AverageCalc_Hum.CalculateAvg(in);
-        System.out.println(String.format("Value of humidity is %f",
+        System.out.println(String.format("Average Value of humidity is %f",
                 output));
+        Thread.sleep(1000);
         this.controlUnit.triggerHumidDeHumid(output);
+        Config.getBarrier().await();
 
     }
 
-    public void AvgCalcCO(Float in) {
+    public void AvgCalcCO(Float in) throws BrokenBarrierException, InterruptedException {
         float output = AverageCalc_CO.CalculateAvg(in);
-        System.out.println(String.format("Value of CO is %f",
+        System.out.println(String.format("Average calculated Value of CO is %f",
                 output));
+        Thread.sleep(1000);
         aqiCalculator.calculateCOIndex(output);
+        Config.getBarrier().await();
 
     }
 
-    public void AvgCalcCO2(Float in){
+    public void AvgCalcCO2(Float in) throws BrokenBarrierException, InterruptedException {
         float output = AverageCalc_CO2.CalculateAvg(in);
-        System.out.println(String.format("Value of CO2 is %f",
+        System.out.println(String.format("Average calculated Value of CO2 is %f",
                 output));
+        Thread.sleep(1000);
         aqiCalculator.calculateCO2Index(output);
+        Config.getBarrier().await();
     }
 
-    public void AvgCalcNO2(Float in){
+    public void AvgCalcNO2(Float in) throws BrokenBarrierException, InterruptedException {
         float output = AverageCalc_NO2.CalculateAvg(in);
-        System.out.println(String.format("Value of NO2 is %f",
+        System.out.println(String.format(" Average calculated  Value of NO2 is %f",
              output));
+        Thread.sleep(1000);
         aqiCalculator.calculateNO2Index(output);
+        Config.getBarrier().await();
     }
 
-    public void AvgCalcPM25(Float in){
+    public void AvgCalcPM25(Float in) throws BrokenBarrierException, InterruptedException {
         float output = AverageCalc_PM25.CalculateAvg(in);
-        System.out.println(String.format("Value of PM25 is %f",
+        System.out.println(String.format("Average calculated Value of PM25 is %f",
              output));
+        Thread.sleep(1000);
         aqiCalculator.calculatePM25Index(output);
+        Config.getBarrier().await();
     }
 
-    public void AvgCalcPM10(Float in){
+    public void AvgCalcPM10(Float in) throws BrokenBarrierException, InterruptedException {
         float output = AverageCalc_PM10.CalculateAvg(in);
-        System.out.println(String.format("Value of PM10 is %f",
+        System.out.println(String.format(" Average calculated Value of PM10 is %f",
                output));
+        Thread.sleep(1000);
         aqiCalculator.calculatePM10Index(output);
+        Config.getBarrier().await();
     }
 }

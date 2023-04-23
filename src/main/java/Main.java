@@ -15,11 +15,10 @@ public class Main {
 
 
 
-            while (Config.getRoundValue()<=4) {
+            while (Config.getRoundValue()<=40) {
                 data.startRound(Config.getRoundValue());
                 Config.getBarrier().await();
                 Config.incrementRound();
-                System.out.println("Entering next round -------------------------");
                 System.out.println("\n");
             }
 
