@@ -1,7 +1,6 @@
 package components.aqi;
 
-import components.Config;
-import components.ControlUnit;
+import components.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +28,8 @@ public class IndexSelector implements Runnable {
                         aqi = Math.max(curr, aqi);
 
                     }
-                    System.out.println("Calculated AQI for current round is  "+aqi);
+                    //System.out.println(ConsoleColors.RED+"Calculated AQI for current round is  "+aqi+ConsoleColors.RESET);
+                    Display.addToDisplay(new DisplayValue(Display.AQI_MARKER,aqi));
                     Thread.sleep(1000);
                     controlUnit.triggerFan(aqi);
                     try {
@@ -42,7 +42,7 @@ public class IndexSelector implements Runnable {
 
                 }
                 else {
-                    if(Config.getRoundValue()>=40)
+                    if(Config.getRoundValue()>72)
                         break;
                     Thread.sleep(1000);
                 }

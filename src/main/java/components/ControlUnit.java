@@ -98,8 +98,8 @@ public class ControlUnit {
             }
         }
 
-        System.out.println("Based on AQI, out inc and dec for fan are "+out+getString(inc,dec));
-        Thread.sleep(1000);
+        //System.out.println("Based on AQI, out inc and dec for fan are "+out+getString(inc,dec));
+        //Thread.sleep(1000);
         fan.FanStatus(out, inc, dec);
     }
 
@@ -116,7 +116,7 @@ public class ControlUnit {
             if (humidityLevel > 60) {
                 deHumidOut = true;
             }
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
             humidifier.triggerHumidifier(humidOut);
             humidifier.triggerDehumidifier(deHumidOut);
 

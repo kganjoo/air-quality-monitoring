@@ -29,8 +29,9 @@ public class DataPreprocessor {
         if(round==1){
             Init();
         }
+        System.out.println("FETCHING READINGS FROM SENSORS");
         this.round = round;
-//        getTemperature();
+        getTemperature();
         getHumidity();
         getCO2GasConcentration();
         getNO2GasConcentration();
@@ -41,28 +42,28 @@ public class DataPreprocessor {
 
     }
 
-//    private void getTemperature() throws IOException {
-//        executorService.submit(()->{
-//
-//            TempHum temp = new TempHum();
-//            temp.getReading();
-//            try{
-//                Float value = getValueFromFile(Constants.TEMP_INPUT);
-//
-//                smoothener.AvgCalcTemp(value);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
-//    }
+    private void getTemperature() throws IOException {
+        executorService.submit(()->{
+
+            TempHum temp = new TempHum();
+            temp.getReading();
+            try{
+                Float value = getValueFromFile(Constants.TEMP_INPUT);
+
+                smoothener.AvgCalcTemp(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     private void getHumidity() throws IOException {
         executorService.submit(()->{
             TempHum hum = new TempHum();
             hum.getReading();
             try {
-                printHelper("DHT22");
-                Thread.sleep(1000);
+                //printHelper("DHT22");
+                //Thread.sleep(1000);
                 Float value = getValueFromFile(Constants.HUM_INPUT);
                 smoothener.AvgCalcHum(value);
             } catch (IOException | BrokenBarrierException | InterruptedException e) {
@@ -77,8 +78,8 @@ public class DataPreprocessor {
             CO co = new CO();
             co.getReading();
             try {
-                printHelper("MQ-7 SENSOR");
-                Thread.sleep(1000);
+                //printHelper("MQ-7 SENSOR");
+                //Thread.sleep(1000);
                 Float value = getValueFromFile(Constants.CO_INPUT);
                 smoothener.AvgCalcCO(value);
 
@@ -94,8 +95,8 @@ public class DataPreprocessor {
             CO2 co2 = new CO2();
             co2.getReading();
                 try {
-                    printHelper("MG-811");
-                    Thread.sleep(1000);
+                    //printHelper("MG-811");
+                    //Thread.sleep(1000);
                     Float value = getValueFromFile(Constants.CO2_INPUT);
                     smoothener.AvgCalcCO2(value);
                 } catch (IOException | BrokenBarrierException | InterruptedException e) {
@@ -110,8 +111,8 @@ public class DataPreprocessor {
             NO2 no2 = new NO2();
             no2.getReading();
                 try {
-                    printHelper("NO2-D4");
-                    Thread.sleep(1000);
+                    //printHelper("NO2-D4");
+                    //Thread.sleep(1000);
                     Float value = getValueFromFile(Constants.NO2_INPUT);
                     smoothener.AvgCalcNO2(value);
                 } catch (IOException | BrokenBarrierException | InterruptedException e) {
@@ -128,8 +129,8 @@ public class DataPreprocessor {
                 try {
                     //read from file
 
-                    printHelper("PM SDS011");
-                    Thread.sleep(1000);
+                    //printHelper("PM SDS011");
+                    //Thread.sleep(1000);
                     Float value = getValueFromFile(Constants.PM25_INPUT);
                     smoothener.AvgCalcPM25(value);
                 } catch (IOException | BrokenBarrierException | InterruptedException e) {
@@ -144,8 +145,8 @@ public class DataPreprocessor {
         PM pm10 = new PM();
         pm10.getReading();
             try {
-                printHelper("PM SDS011");
-                Thread.sleep(1000);
+                //printHelper("PM SDS011");
+                //Thread.sleep(1000);
                 Float value = getValueFromFile(Constants.PM10_INPUT);
                 smoothener.AvgCalcPM10(value);
             } catch (IOException | BrokenBarrierException | InterruptedException e) {
@@ -161,7 +162,7 @@ public class DataPreprocessor {
         return value;
     }
 
-    private void printHelper(String sensorName){
-        System.out.println("Fetching readings from sensor -- "+sensorName);
-    }
+//    private void //printHelper(String sensorName){
+//        System.out.println("Fetching readings from sensor -- "+sensorName);
+//    }
 }

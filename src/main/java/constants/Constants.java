@@ -16,6 +16,12 @@ public class Constants {
     public static final String TEMP_INPUT = "src/main/java/sensors/TempInput.csv";
 
 
+    public static String EMPTY_STRING = "";
+    public static int numThreads = 9;
+    public static int DISPLAY_POLLUTANT_QUEUE_SIZE = 8;
+    public static int DISPLAY_CONTROL_ACTIONS_QUEUE_SIZE = 3;
+
+
 
     public static final Integer window_size = 5;
 }
