@@ -1,7 +1,6 @@
 package components.aqi;
 
-import components.Config;
-import components.ControlUnit;
+import components.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +12,9 @@ public class IndexSelector implements Runnable {
 
     private BlockingQueue<Float> readings;
 
-    IndexSelector(BlockingQueue<Float> readings) {
+    IndexSelector(BlockingQueue<Float> readings, ControlUnit controlUnit) {
         this.readings = readings;
-        this.controlUnit = new ControlUnit();
+        this.controlUnit = controlUnit;
     }
 
 
@@ -23,19 +22,27 @@ public class IndexSelector implements Runnable {
         try {
             while(true) {
                 if(readings.size()==5) {
-                    Float max = Float.MIN_VALUE;
+                    Float aqi = Float.MIN_VALUE;
                     while (readings.size() > 0) {
                         Float curr = readings.remove();
-                        max = Math.max(curr, max);
+                        aqi = Math.max(curr, aqi);
 
                     }
-                    System.out.println("Calling control unit with aqiIndex "+max);
+                    //System.out.println(ConsoleColors.RED+"Calculated AQI for current round is  "+aqi+ConsoleColors.RESET);
+                    Display.addToDisplay(new DisplayValue(Display.AQI_MARKER,aqi));
+                    Thread.sleep(1000);
+                    controlUnit.triggerFan(aqi);
+                    try {
+                        Config.getBarrier().await();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
 
-                    controlUnit.getControlAction(max);
 
                 }
                 else {
-                    if(Config.getRoundValue()>=5)
+                    if(Config.getRoundValue()>72)
                         break;
                     Thread.sleep(1000);
                 }

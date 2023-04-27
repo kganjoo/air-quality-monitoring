@@ -1,6 +1,7 @@
 package components.aqi;
 
 import components.Config;
+import components.ControlUnit;
 import constants.Constants;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class AQICalculator {
     private Float aqiIndex;
     private final ExecutorService executorService;
 
-    public AQICalculator() {
+    public AQICalculator(ControlUnit controlUnit) {
         this.executorService = Config.getExecutorService();
         PM25Index = new IndexCalculator("PM25", Constants.PM25_INDEX_FILE_PATH);
         NO2Index = new IndexCalculator("NO2",Constants.NO2_INDEX_FILE_PATH);
@@ -28,7 +29,7 @@ public class AQICalculator {
         COIndex = new IndexCalculator("CO",Constants.CO_INDEX_FILE_PATH);
         CO2Index = new IndexCalculator("CO2",Constants.CO2_INDEX_FILE_PATH);
         pollutantIndexes = new ArrayBlockingQueue<>(5);
-        indexSelector = new IndexSelector(pollutantIndexes);
+        indexSelector = new IndexSelector(pollutantIndexes,controlUnit);
         executorService.submit(indexSelector);
 
     }
@@ -36,9 +37,10 @@ public class AQICalculator {
 
     public void calculatePM25Index(Float reading) {
         Float pm25Index = PM25Index.getPollutantIndex(reading);
-        System.out.println("Calculated index value for PM25 is "+ pm25Index);
+        //System.out.print("Calculated index  for PM25 is "+ pm25Index);
         try {
             pollutantIndexes.put(pm25Index);
+            //Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -47,9 +49,10 @@ public class AQICalculator {
 
     public void calculatePM10Index(Float reading)  {
         Float pm10Index = PM10Index.getPollutantIndex(reading);
-        System.out.println("Calculated index value for PM10 is "+ pm10Index);
+        //System.out.print("Calculated index  for PM10 is "+ pm10Index);
         try {
             pollutantIndexes.put(pm10Index);
+            //Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -58,9 +61,10 @@ public class AQICalculator {
 
     public void calculateCOIndex(Float reading)  {
         Float cOIndex = COIndex.getPollutantIndex(reading);
-        System.out.println("Calculated index value for CO is "+ cOIndex);
+        //System.out.print("Calculated index for CO is "+ cOIndex);
         try {
             pollutantIndexes.put(cOIndex);
+            //Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -68,9 +72,10 @@ public class AQICalculator {
 
     public void calculateNO2Index(Float reading)  {
         Float no2Index = NO2Index.getPollutantIndex(reading);
-        System.out.println("Calculated index value for NO2 is "+ no2Index);
+        //System.out.print("Calculated index  for NO2 is "+ no2Index);
         try {
             pollutantIndexes.put(no2Index);
+            //Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -79,9 +84,10 @@ public class AQICalculator {
 
     public void calculateCO2Index(Float reading)  {
         Float co2Index = CO2Index.getPollutantIndex(reading);
-        System.out.println("Calculated index value for CO2 is "+ co2Index);
+        //System.out.print("Calculated index  for CO2 is "+ co2Index);
         try {
             pollutantIndexes.put(co2Index);
+            //Thread.sleep(1000);
         }
         catch (Exception e){
             e.printStackTrace();

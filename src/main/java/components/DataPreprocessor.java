@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,6 +29,7 @@ public class DataPreprocessor {
         if(round==1){
             Init();
         }
+        System.out.println("FETCHING READINGS FROM SENSORS");
         this.round = round;
         getTemperature();
         getHumidity();
@@ -40,9 +42,9 @@ public class DataPreprocessor {
 
     }
 
-    public void getTemperature() throws IOException {
+    private void getTemperature() throws IOException {
         executorService.submit(()->{
-            
+
             TempHum temp = new TempHum();
             temp.getReading();
             try{
@@ -55,87 +57,99 @@ public class DataPreprocessor {
         });
     }
 
-    public void getHumidity() throws IOException {
+    private void getHumidity() throws IOException {
         executorService.submit(()->{
-            
             TempHum hum = new TempHum();
             hum.getReading();
             try {
+                //printHelper("DHT22");
+                //Thread.sleep(1000);
                 Float value = getValueFromFile(Constants.HUM_INPUT);
                 smoothener.AvgCalcHum(value);
-            } catch (IOException e) {
+            } catch (IOException | BrokenBarrierException | InterruptedException e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public void getCOGasConcentration() throws IOException {
+    private void getCOGasConcentration() throws IOException {
         executorService.submit(()->{
             
             CO co = new CO();
             co.getReading();
             try {
+                //printHelper("MQ-7 SENSOR");
+                //Thread.sleep(1000);
                 Float value = getValueFromFile(Constants.CO_INPUT);
                 smoothener.AvgCalcCO(value);
 
-            } catch (IOException e) {
+            } catch (IOException | BrokenBarrierException | InterruptedException e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public void getCO2GasConcentration() throws IOException {
+    private void getCO2GasConcentration() throws IOException {
         executorService.submit(()->{
             
             CO2 co2 = new CO2();
             co2.getReading();
                 try {
+                    //printHelper("MG-811");
+                    //Thread.sleep(1000);
                     Float value = getValueFromFile(Constants.CO2_INPUT);
                     smoothener.AvgCalcCO2(value);
-                } catch (IOException e) {
+                } catch (IOException | BrokenBarrierException | InterruptedException e) {
                     e.printStackTrace();
                 }
         });
     }
 
-    public void getNO2GasConcentration() throws IOException {
+    private void getNO2GasConcentration() throws IOException {
         executorService.submit(()->{
             
             NO2 no2 = new NO2();
             no2.getReading();
                 try {
+                    //printHelper("NO2-D4");
+                    //Thread.sleep(1000);
                     Float value = getValueFromFile(Constants.NO2_INPUT);
                     smoothener.AvgCalcNO2(value);
-                } catch (IOException e) {
+                } catch (IOException | BrokenBarrierException | InterruptedException e) {
                     e.printStackTrace();
                 }
         });
     }
 
-    public void getPM25() throws IOException {
+    private void getPM25() throws IOException {
         executorService.submit(()->{
             
             PM pm25 = new PM();
             pm25.getReading();
                 try {
                     //read from file
+
+                    //printHelper("PM SDS011");
+                    //Thread.sleep(1000);
                     Float value = getValueFromFile(Constants.PM25_INPUT);
                     smoothener.AvgCalcPM25(value);
-                } catch (IOException e) {
+                } catch (IOException | BrokenBarrierException | InterruptedException e) {
                     e.printStackTrace();
                 }
         });
     }
 
-    public void getPM10() throws IOException {
+    private void getPM10() throws IOException {
         executorService.submit(()->{
             
         PM pm10 = new PM();
         pm10.getReading();
             try {
+                //printHelper("PM SDS011");
+                //Thread.sleep(1000);
                 Float value = getValueFromFile(Constants.PM10_INPUT);
                 smoothener.AvgCalcPM10(value);
-            } catch (IOException e) {
+            } catch (IOException | BrokenBarrierException | InterruptedException e) {
                 e.printStackTrace();
             }
         });
@@ -147,4 +161,8 @@ public class DataPreprocessor {
         Float value = Float.parseFloat(reading);
         return value;
     }
+
+//    private void //printHelper(String sensorName){
+//        System.out.println("Fetching readings from sensor -- "+sensorName);
+//    }
 }

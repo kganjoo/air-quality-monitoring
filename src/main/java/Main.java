@@ -1,6 +1,8 @@
 import components.Config;
 import components.DataPreprocessor;
+import components.Display;
 import components.aqi.IndexCalculator;
+import constants.Constants;
 
 import java.io.*;
 import java.util.Properties;
@@ -12,14 +14,14 @@ public class Main {
         System.out.println("Reading Config File:...");
         try {
             DataPreprocessor data = new DataPreprocessor();
+            Config.getExecutorService().submit(new Display());
 
 
 
-            while (Config.getRoundValue()<=4) {
+            while (Config.getRoundValue()<=72) {
                 data.startRound(Config.getRoundValue());
                 Config.getBarrier().await();
                 Config.incrementRound();
-                System.out.println("Entering next round -------------------------");
                 System.out.println("\n");
             }
 

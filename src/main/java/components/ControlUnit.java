@@ -8,38 +8,41 @@ public class ControlUnit {
         Hazardous;
     }
 
-    public class Output{
-        boolean out = false;
-        Boolean inc = null;
-        Boolean dec = null;
-    }
+
+
+
 
     private Level level;
     private Fan fan;
+    private Humidifier humidifier;
     public ControlUnit(){
         this.level = Level.OK;
         this.fan = new Fan();
+        this.humidifier = new Humidifier();
     }
 
     public Level getLatestLevel(float aqiIndex)
     {
-        if (aqiIndex>=0 && aqiIndex<=100)
+        if (aqiIndex>=0 && aqiIndex<=50)
             return Level.OK;
-        else if (aqiIndex>100 && aqiIndex<=200)
+        else if (aqiIndex>50 && aqiIndex<=100)
             return Level.Moderate;
-        else if (aqiIndex>200 && aqiIndex<=310)
+        else if (aqiIndex>100 && aqiIndex<=200)
             return Level.Severe;
         else
             return Level.Hazardous;
     }
 
-    public void getControlAction(float aqiIndex){
-        Output output = new Output();
+    public void triggerFan(float aqiIndex) throws InterruptedException {
+        boolean out = false;
+        Boolean inc = null;
+        Boolean dec = null;
+
         Level latestLevel = getLatestLevel(aqiIndex);
         if(level==Level.OK && (latestLevel==Level.Moderate || latestLevel == Level.Severe || latestLevel==Level.Hazardous))
         {
             level = Level.Moderate;
-            output.out = true;
+            out = true;
         }
 
         else if (level==Level.Moderate)
@@ -47,16 +50,16 @@ public class ControlUnit {
             if(latestLevel == Level.Severe || latestLevel==Level.Hazardous)
             {
                 level = Level.Severe;
-                output.inc = true;
-                output.out = true;
+                inc = true;
+                out = true;
             }
             else if(latestLevel==Level.Moderate)
             {
-                output.out = true;
+                out = true;
             }
 
             else if (latestLevel==Level.OK) {
-                output.out = false;
+                out = false;
             }
         }
 
@@ -64,37 +67,81 @@ public class ControlUnit {
             if(latestLevel==Level.Hazardous)
             {
                 level = Level.Hazardous;
-                output.inc = true;
-                output.out = true;
+                inc = true;
+                out = true;
             }
 
             else if(latestLevel == Level.Severe)
             {
-                output.out = true;
+                out = true;
             }
 
             else if (latestLevel==Level.Moderate)
             {
                 level = Level.Moderate;
-                output.dec = true;
-                output.out = true;
+                dec = true;
+                out = true;
             }
         }
 
         else if(level==Level.Hazardous){
             if(latestLevel==Level.Hazardous)
             {
-                output.out = true;
+                out = true;
             }
 
             else if(latestLevel==Level.Moderate || latestLevel == Level.Severe)
             {
                 level = Level.Severe;
-                output.dec = true;
-                output.out = true;
+                dec = true;
+                out = true;
             }
         }
-        System.out.println("Calculated");
-        fan.FanStatus(output.out, output.inc, output.dec);
+
+        //System.out.println("Based on AQI, out inc and dec for fan are "+out+getString(inc,dec));
+        //Thread.sleep(1000);
+        fan.FanStatus(out, inc, dec);
     }
+
+
+    public void triggerHumidDeHumid(float humidityLevel) throws InterruptedException {
+        boolean humidOut =false;
+        boolean deHumidOut = false;
+
+            if (humidityLevel < 40) {
+                humidOut = true;
+
+
+            }
+            if (humidityLevel > 60) {
+                deHumidOut = true;
+            }
+            //Thread.sleep(1000);
+            humidifier.triggerHumidifier(humidOut);
+            humidifier.triggerDehumidifier(deHumidOut);
+
+
+    }
+
+    //todo remove
+    private String getString(Boolean inc, Boolean dec){
+        String s = " ";
+        if(inc==null)
+            s+="null ";
+        else
+            s+=inc.toString()+" ";
+
+        if(dec==null)
+            s+="null ";
+        else
+            s+=dec.toString()+" ";
+
+        return s;
+
+    }
+
+
+
+
+
 }

@@ -1,11 +1,22 @@
 package components;
 
+import constants.Constants;
+
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Config {
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(5);
-    private static CyclicBarrier barrier = new CyclicBarrier(2);
+    /**
+     * We need 7 threads for the entire round.
+     *  7 threads started by data preprocessor for each of its computation
+     *  1 thread started by aqi calculator , where index selector keeps running and polls for values
+     *   1 thread started by display component , where it polls for display values
+     *
+     */
+
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(Constants.numThreads);
+    // numThreads +1 are running in total , numThreads started by executor service, and 1 main thread
+    private static CyclicBarrier barrier = new CyclicBarrier(Constants.numThreads+1);
     private static AtomicInteger round = new AtomicInteger(1);
 
 
