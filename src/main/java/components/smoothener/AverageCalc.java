@@ -1,7 +1,5 @@
 package components.smoothener;
 
-import constants.Constants;
-
 public class AverageCalc {
 
     private float total;
@@ -36,13 +34,8 @@ public class AverageCalc {
                 read_index = 0;
             }
         }
-
         return output;
     }
-
-
-
-
 }
 
 

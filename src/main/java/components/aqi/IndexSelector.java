@@ -1,9 +1,6 @@
 package components.aqi;
 
 import components.*;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 public class IndexSelector implements Runnable {
@@ -17,7 +14,6 @@ public class IndexSelector implements Runnable {
         this.controlUnit = controlUnit;
     }
 
-
     public void calculateIndex() {
         try {
             while(true) {
@@ -26,9 +22,7 @@ public class IndexSelector implements Runnable {
                     while (readings.size() > 0) {
                         Float curr = readings.remove();
                         aqi = Math.max(curr, aqi);
-
                     }
-                    //System.out.println(ConsoleColors.RED+"Calculated AQI for current round is  "+aqi+ConsoleColors.RESET);
                     Display.addToDisplay(new DisplayValue(Display.AQI_MARKER,aqi));
                     Thread.sleep(1000);
                     controlUnit.triggerFan(aqi);
@@ -54,8 +48,7 @@ public class IndexSelector implements Runnable {
         }
     }
 
-
-        @Override
+    @Override
     public void run() {
         calculateIndex();
     }

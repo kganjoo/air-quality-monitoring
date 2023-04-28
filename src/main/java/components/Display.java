@@ -21,15 +21,11 @@ public class Display implements Runnable {
     public static String AQI_MARKER = "AQI";
     private static DecimalFormat df = new DecimalFormat("##.##");
 
-
-
-
     @Override
     public void run() {
      display();
 
     }
-
 
     public static void addToDisplay(DisplayValue value){
         displayValuesQueue.add(value);
@@ -38,7 +34,6 @@ public class Display implements Runnable {
     public static void addToControlAction(String action){
         controlActionsQueue.add(action);
     }
-
 
     private void display(){
         try {
@@ -116,9 +111,7 @@ public class Display implements Runnable {
             for(String action : actions){
                 System.out.println(ConsoleColors.CYAN+action+ConsoleColors.RESET);
             }
-
         }
-
     }
 
     private void displayOutput(Float co,
@@ -160,7 +153,6 @@ public class Display implements Runnable {
 
     }
 
-
     private String getColorFormattedAQI(Float aqiIndex){
         if (aqiIndex>=0 && aqiIndex<=50)
             return ""+ConsoleColors.GREEN_BOLD_BRIGHT+aqiIndex;
@@ -171,8 +163,4 @@ public class Display implements Runnable {
         else
             return ""+ConsoleColors.RED_BOLD_BRIGHT+aqiIndex;
     }
-
-
-
-
 }

@@ -1,6 +1,5 @@
 package components;
 
-
 public class DisplayValue{
     String type;
     Float value;

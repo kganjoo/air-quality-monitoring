@@ -8,10 +8,6 @@ public class ControlUnit {
         Hazardous;
     }
 
-
-
-
-
     private Level level;
     private Fan fan;
     private Humidifier humidifier;
@@ -97,12 +93,8 @@ public class ControlUnit {
                 out = true;
             }
         }
-
-        //System.out.println("Based on AQI, out inc and dec for fan are "+out+getString(inc,dec));
-        //Thread.sleep(1000);
         fan.FanStatus(out, inc, dec);
     }
-
 
     public void triggerHumidDeHumid(float humidityLevel) throws InterruptedException {
         boolean humidOut =false;
@@ -110,38 +102,11 @@ public class ControlUnit {
 
             if (humidityLevel < 40) {
                 humidOut = true;
-
-
             }
             if (humidityLevel > 60) {
                 deHumidOut = true;
             }
-            //Thread.sleep(1000);
             humidifier.triggerHumidifier(humidOut);
             humidifier.triggerDehumidifier(deHumidOut);
-
-
     }
-
-    //todo remove
-    private String getString(Boolean inc, Boolean dec){
-        String s = " ";
-        if(inc==null)
-            s+="null ";
-        else
-            s+=inc.toString()+" ";
-
-        if(dec==null)
-            s+="null ";
-        else
-            s+=dec.toString()+" ";
-
-        return s;
-
-    }
-
-
-
-
-
 }

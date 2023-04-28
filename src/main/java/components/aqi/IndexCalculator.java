@@ -3,9 +3,7 @@ package components.aqi;
 import com.opencsv.CSVReader;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-
 import java.io.FileReader;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +18,6 @@ public class IndexCalculator {
         this.rangeMappings = new HashMap<>();
         init(fileName);
     }
-
 
     public  Float getPollutantIndex(Float concentration) {
         for(Pair<Float,Float> concentrationRange : rangeMappings.keySet()){
@@ -42,13 +39,7 @@ public class IndexCalculator {
 
                 return pollutantIndex;
             }
-
-
         }
-
-
-
-
         return null;
     }
 
@@ -93,9 +84,5 @@ public class IndexCalculator {
             System.out.println(e.getMessage());
             // TODO: 4/8/23  handle exception
         }
-
-
     }
-
-
 }

@@ -1,11 +1,7 @@
 import components.Config;
 import components.DataPreprocessor;
 import components.Display;
-import components.aqi.IndexCalculator;
-import constants.Constants;
-
 import java.io.*;
-import java.util.Properties;
 import java.util.concurrent.*;
 
 public class Main {
@@ -15,8 +11,6 @@ public class Main {
         try {
             DataPreprocessor data = new DataPreprocessor();
             Config.getExecutorService().submit(new Display());
-
-
 
             while (Config.getRoundValue()<=72) {
                 data.startRound(Config.getRoundValue());
@@ -34,8 +28,6 @@ public class Main {
             e.printStackTrace();
         } catch (BrokenBarrierException e) {
             e.printStackTrace();
-        }
-
-
+        }:
     }
 }
