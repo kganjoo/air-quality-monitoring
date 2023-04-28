@@ -28,6 +28,6 @@ public class Main {
             e.printStackTrace();
         } catch (BrokenBarrierException e) {
             e.printStackTrace();
-        }:
+        }
     }
 }
