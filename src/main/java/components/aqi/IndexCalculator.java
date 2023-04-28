@@ -82,7 +82,6 @@ public class IndexCalculator {
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            // TODO: 4/8/23  handle exception
         }
     }
 }
