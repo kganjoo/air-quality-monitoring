@@ -13,7 +13,6 @@ public class AQICalculator {
     private IndexCalculator COIndex;
     private IndexCalculator CO2Index;
     private IndexSelector indexSelector;
-    private BlockingQueue<Float>pollutantIndexes;
     private Float aqiIndex;
     private final ExecutorService executorService;
 
@@ -24,8 +23,8 @@ public class AQICalculator {
         PM10Index = new IndexCalculator("PM10",Constants.PM10_INDEX_FILE_PATH);
         COIndex = new IndexCalculator("CO",Constants.CO_INDEX_FILE_PATH);
         CO2Index = new IndexCalculator("CO2",Constants.CO2_INDEX_FILE_PATH);
-        pollutantIndexes = new ArrayBlockingQueue<>(5);
-        indexSelector = new IndexSelector(pollutantIndexes,controlUnit);
+
+        indexSelector = new IndexSelector(controlUnit);
         executorService.submit(indexSelector);
 
     }
@@ -33,51 +32,30 @@ public class AQICalculator {
 
     public void calculatePM25Index(Float reading) {
         Float pm25Index = PM25Index.getPollutantIndex(reading);
-        try {
-            pollutantIndexes.put(pm25Index);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        indexSelector.addReading(pm25Index);
 
     }
 
     public void calculatePM10Index(Float reading)  {
         Float pm10Index = PM10Index.getPollutantIndex(reading);
-        try {
-            pollutantIndexes.put(pm10Index);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        indexSelector.addReading(pm10Index);
     }
 
 
     public void calculateCOIndex(Float reading)  {
         Float cOIndex = COIndex.getPollutantIndex(reading);
-        try {
-            pollutantIndexes.put(cOIndex);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        indexSelector.addReading(cOIndex);
     }
 
     public void calculateNO2Index(Float reading)  {
         Float no2Index = NO2Index.getPollutantIndex(reading);
-        try {
-            pollutantIndexes.put(no2Index);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        indexSelector.addReading(no2Index);
 
     }
 
     public void calculateCO2Index(Float reading)  {
         Float co2Index = CO2Index.getPollutantIndex(reading);
-        try {
-            pollutantIndexes.put(co2Index);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        indexSelector.addReading(co2Index);
 
     }
 

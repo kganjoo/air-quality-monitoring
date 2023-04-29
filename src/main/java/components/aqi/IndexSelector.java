@@ -1,6 +1,8 @@
 package components.aqi;
 
 import components.*;
+
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class IndexSelector implements Runnable {
@@ -9,9 +11,13 @@ public class IndexSelector implements Runnable {
 
     private BlockingQueue<Float> readings;
 
-    IndexSelector(BlockingQueue<Float> readings, ControlUnit controlUnit) {
-        this.readings = readings;
+    IndexSelector( ControlUnit controlUnit) {
+        this.readings =   new ArrayBlockingQueue<>(5);
         this.controlUnit = controlUnit;
+    }
+
+    public void addReading(Float value){
+        this.readings.add(value);
     }
 
     public void calculateIndex() {
